@@ -1,0 +1,33 @@
+(define (day-of-week d m y)
+  (let* ((a (quotient (- 14 m) 12))
+         (y (- y a))
+         (m (- (+ m (* 12 a)) 2)))
+    (remainder (- (+ d (quotient (* 31 m) 12) y (quotient y 4) (quotient y 400)) (quotient y 100)) 7)))
+
+
+(define (quadro a b c)
+  (let ((diskr (- (* b b) (* 4 a c))))
+    (if (< diskr 0)
+        (list)
+        (if (= a 0)
+            (display (list (/ b (- c))))
+            (if (= (/ (- (sqrt diskr) b) (* 2 a)) (/ (- (- (sqrt diskr)) b) (* 2 a)))
+                (display (list (/ (- (sqrt diskr) b) (* 2 a))))
+                (display (list (/ (- (sqrt diskr) b) (* 2 a)) (/ (- (- (sqrt diskr)) b) (* 2 a)))))))))
+
+(define (my-gcd a b)
+  (cond ((or (< a 0) (< b 0)) (my-gcd (abs a) (abs b)))
+        ((< a b) (my-gcd b a))
+        ((= b 0) a)
+        (else (my-gcd b (remainder a b)))))
+
+(define (my-lcm a b)
+  (/ (* a b) (my-gcd a b)))
+
+(define (prime? a)
+  (let loop((i 2) (res 0))
+    (if (> i (sqrt a))
+        (= res 0)
+        (if (= (remainder a i) 0)
+            (loop (+ i 1) (+ res 1))
+            (loop (+ i 1) res)))))
