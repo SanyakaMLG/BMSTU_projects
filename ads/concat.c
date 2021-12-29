@@ -18,7 +18,7 @@ int main(int argc, char ** argv) {
     int n;
     scanf("%d", &n);
     char **s;
-    s = malloc(n);
+    s = malloc(n * sizeof(char*));
     char *str;
     str = malloc(1000);
     for(int i = 0; i < n; ++i) {

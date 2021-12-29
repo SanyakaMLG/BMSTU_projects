@@ -21,7 +21,7 @@ int maxarray(void *base, size_t nel, size_t width,
 }
 
 int main(int argc, char ** argv) {
-    int arr[10];
+    double arr[10];
     for(int i = 0; i < 10; ++i) {
         scanf("%d", &arr[i]);
     }
