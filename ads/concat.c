@@ -20,11 +20,12 @@ int main(int argc, char ** argv) {
     char **s;
     s = malloc(n * sizeof(char*));
     char *str;
-    str = malloc(1000);
     for(int i = 0; i < n; ++i) {
+        str = malloc(1000);
         scanf("%s", str);
         s[i] = malloc(strlen(str) + 1);
         strcpy(s[i], str);
+        free(str);
     }
     printf("%s", concat(s, n));
     free(s);
