@@ -13,6 +13,9 @@ unsigned long binsearch(unsigned long nel, int (*compare)(unsigned long i)) {
             }
         }
     }
+    if(compare(R - (R   - L)/2) == 0) {
+        return R - (R - L)/2;
+    }
     return nel;
 }
 
