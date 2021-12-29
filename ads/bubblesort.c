@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int a[10] = {1, 4, 6, 2, 8, 3, 7, 9, 10, 5};
+/* int a[1] = {1};
 
 int compare(unsigned long i, unsigned long j) {
     if(a[i] < a[j]) return -1;
@@ -15,11 +15,13 @@ void swap(unsigned long i, unsigned long j) {
     a[i] = a[j];
     a[j] = tmp;
 }
+*/
 
 void bubblesort(unsigned long nel,
                 int  (*compare)(unsigned long i, unsigned long j),
                 void (*swap)(unsigned long i, unsigned long j))
 {
+    if(nel == 1) return;
     unsigned long tLEFT = 0;
     unsigned long tRIGHT = nel - 1;
     unsigned long bound;
@@ -31,9 +33,9 @@ void bubblesort(unsigned long nel,
         unsigned long i = tLEFT;
         while(i < bound) {
             if(compare(i, i + 1) == 1) {
-                    swap(i, i + 1);
-                    tRIGHT = i;
-                    count++;
+                swap(i, i + 1);
+                tRIGHT = i;
+                count++;
             }
             ++i;
         }
@@ -53,9 +55,9 @@ void bubblesort(unsigned long nel,
 
 int main()
 {
-    bubblesort(10, compare, swap);
-    for(int i = 0; i < 10; ++i) {
+/*    bubblesort(1, compare, swap);
+    for(int i = 0; i < 1; ++i) {
         printf("%d ", a[i]);
-    }
+    }*/
     return 0;
 }
