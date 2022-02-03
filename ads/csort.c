@@ -2,31 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-int strcomp(char *a, char *b) {
-    if(strlen(a) > strlen(b)) {
-        return 1;
-    } else {
-        if(strlen(a) == strlen(b)) {
-            for(int i = 0; i < strlen(a); ++i) {
-                if(a[i] == b[i]) continue;
-                if(a[i] > b[i]) return 1;
-                else return 0;
-            }
-        } else {
-            return 0;
-        }
-    }
-    return 0;
-}
-
 void csort(char *src, char *dest) {
     char **s;
     strcpy(dest, "");
-    s = (char**)malloc(1000 * sizeof(char*));
+    s = (char**)malloc(1001 * sizeof(char*));
     int i = 0;
     char *pch = strtok(src, " ");
     while(pch != NULL) {
-        s[i] = (char*)malloc(1000);
+        s[i] = (char*)malloc(1001);
         strcpy(s[i], pch);
         pch = strtok(NULL, " ");
         ++i;
@@ -37,21 +20,27 @@ void csort(char *src, char *dest) {
     sorted = (char**)malloc(n * sizeof(char*));
     for(i = 0; i < n; ++i) {
         for(int j = 0; j < n; ++j) {
-            if(strcomp(s[i], s[j])) {
+            int len1 = strlen(s[i]);
+            int len2 = strlen(s[j]);
+            if(len1 > len2) {
                 ++k;
             } else {
-                if(!strcmp(s[i], s[j]) && j < i) {
+                if(len1 == len2 && j < i) {
                     ++k;
                 }
             }
         }
-        sorted[k] = (char*)malloc(1000);
+        sorted[k] = (char*)malloc(1001);
         strcpy(sorted[k], s[i]);
         k = 0;
     }
     for(i = 0; i < n; ++i) {
-        strncat(dest, sorted[i], strlen(sorted[i]) + 1);
-        strncat(dest, " ", 2);
+        if(i != n - 1) {
+            strncat(dest, sorted[i], strlen(sorted[i]) + 1);
+            strncat(dest, " ", 2);
+        } else {
+            strncat(dest, sorted[i], strlen(sorted[i]) + 1);
+        }
     }
     for(i = 0; i < n; ++i) {
         free(s[i]);
@@ -64,5 +53,12 @@ void csort(char *src, char *dest) {
 }
 
 int main(int argc, char ** argv) {
+    char *str = (char*)malloc(1500);
+    char *res = (char*)malloc(1005);
+    gets(str);
+    csort(str, res);
+    printf("%s", res);
+    free(str);
+    free(res);
     return 0;
 }

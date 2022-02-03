@@ -9,17 +9,21 @@ char *fibstr(int n) {
         fib1 = fib2;
         fib2 = fib;
     }
-    char *s1 = malloc(fib);
-    char *s2 = malloc(fib);
-    char *res = malloc(fib);
+    char *s1 = malloc(fib > 1 ? fib + 1 : 2);
+    char *s2 = malloc(fib > 1 ? fib + 1 : 2);
+    char *res = malloc(fib > 1 ? fib + 1 : 2);
     strcpy(s1, "a");
     strcpy(s2, "b");
     if(n == 1) {
         strcpy(res, "a");
+        free(s1);
+        free(s2);
         return res;
     } else {
         if(n == 2) {
             strcpy(res, "b");
+            free(s1);
+            free(s2);
             return res;
         } else {
             strcpy(res, "");
@@ -30,6 +34,7 @@ char *fibstr(int n) {
             }
         }
     }
+    free(s1);
     return res;
 }
 

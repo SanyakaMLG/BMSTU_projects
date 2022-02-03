@@ -7,19 +7,20 @@ void dsort(char *str) {
     for(int i = 0; i < 26; ++i) {
         count[i] = 0;
     }
-    for(int i = 0; i < strlen(str); ++i) {
+    int length = strlen(str);
+    for(int i = 0; i < length; ++i) {
         count[(int)(str[i] - 'a')]++;
     }
     for(int i = 1; i < 26; ++i) {
         count[i] = count[i] + count[i - 1];
     }
-    char *sorted = (char*)malloc(strlen(str) + 1);
-    for(int i = strlen(str) - 1; i >= 0; --i) {
+    char *sorted = (char*)malloc(length + 1);
+    for(int i = length - 1; i >= 0; --i) {
         int j = count[(int)(str[i] - 'a')] - 1;
         count[(int)(str[i] - 'a')] = j;
         sorted[j] = str[i];
     }
-    for(int i = 0; i < strlen(str); ++i) {
+    for(int i = 0; i < length; ++i) {
         str[i] = sorted[i];
     }
     free(sorted);
@@ -31,5 +32,6 @@ int main(int argc, char ** argv) {
     scanf("%s", str);
     dsort(str);
     printf("%s", str);
+    free(str);
     return 0;
 }

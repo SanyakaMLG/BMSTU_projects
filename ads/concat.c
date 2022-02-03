@@ -28,6 +28,9 @@ int main(int argc, char ** argv) {
         free(str);
     }
     printf("%s", concat(s, n));
+    for(int i = 0; i < n; ++i) {
+        free(s[i]);
+    }
     free(s);
     return 0;
 }

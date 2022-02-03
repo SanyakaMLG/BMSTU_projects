@@ -1,30 +1,31 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int comp(void * elem1, void * elem2)
+int maxarray(void *base, unsigned long nel, unsigned long width,
+             int (*compare)(void  *a, void  *b))
 {
-    int f = *((int*)elem1);
-    int s = *((int*)elem2);
-    if (f > s) return  1;
-    if (f < s) return -1;
-    return 0;
+    unsigned long index = 0;
+    char *p, *t1, *t2;
+    p = (char*)base;
+    for (unsigned long i = 0; i < width; i++) (char*)base++;
+    for (unsigned long i = 1; i < nel; i++) {
+        t1 = (char*)base;
+        t2 = p;
+        for (unsigned long j = 0; j < width; j++) {
+            if (compare (t1, t2) < 0) break;
+            if (compare (t1, t2) > 0) {
+                index = i;
+                p = (char*)base;
+                break;
+            }
+            t1++;
+            t2++;
+        }
+        for (unsigned long j = 0; j < width; j++) (char*)base++;
+    }
+    return (int)index;
 }
 
-int maxarray(void *base, size_t nel, size_t width,
-             int(*compare)(void *a, void *b))
-{
-    void *p = base;
-    int *max = (int *)p;
-    for(int i = 0; i < nel; ++i, p += width) {
-        if(compare(p, max) == 1) max = p;
-    }
-    return *max;
-}
-
-int main(int argc, char ** argv) {
-    double arr[10];
-    for(int i = 0; i < 10; ++i) {
-        scanf("%d", &arr[i]);
-    }
-    printf("%d", maxarray(arr, 10, sizeof(int), comp));
+int main() {
     return 0;
 }
