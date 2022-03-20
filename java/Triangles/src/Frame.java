@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,7 +11,7 @@ public class Frame extends JFrame {
         super("Triangle");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
-        setBounds(0, 0, 800, 700);
+        setBounds(0, 0, 800, 800);
         button = new JButton("Draw");
         button.setBounds(710, 5, 70, 40);
         add(button);
@@ -28,10 +27,11 @@ public class Frame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Triangle t = new Triangle();
-                GraphicPanel.rePainting(Integer.parseInt(field1.getText()), Integer.parseInt(field2.getText()));
+                GraphicPanel.rePainting(Integer.parseInt(field1.getText()), Integer.parseInt(field2.getText()),
+                                            Integer.parseInt(field3.getText()));
             }
         });
-        GraphicPanel.setBounds(200, 200, 500, 500);
+        GraphicPanel.setBounds(0, 100, 800, 700);
         add(GraphicPanel);
         label1 = new JLabel("First");
         label1.setBounds(5, 5, 70, 20);
