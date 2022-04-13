@@ -1,0 +1,16 @@
+﻿  hw1.cpp
+hw1.obj : error LNK2001: неразрешенный внешний символ "void __cdecl cv::imshow(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class cv::_InputArray const &)" (?imshow@cv@@YAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV_InputArray@1@@Z).
+hw1.obj : error LNK2001: неразрешенный внешний символ "public: virtual bool __cdecl cv::VideoCapture::retrieve(class cv::_OutputArray const &,int)" (?retrieve@VideoCapture@cv@@UEAA_NAEBV_OutputArray@2@H@Z).
+hw1.obj : error LNK2001: неразрешенный внешний символ "public: virtual bool __cdecl cv::VideoCapture::grab(void)" (?grab@VideoCapture@cv@@UEAA_NXZ).
+hw1.obj : error LNK2001: неразрешенный внешний символ "public: virtual void __cdecl cv::VideoCapture::release(void)" (?release@VideoCapture@cv@@UEAAXXZ).
+hw1.obj : error LNK2001: неразрешенный внешний символ "public: virtual __cdecl cv::VideoCapture::~VideoCapture(void)" (??1VideoCapture@cv@@UEAA@XZ).
+hw1.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl cv::VideoCapture::VideoCapture(int,int)" (??0VideoCapture@cv@@QEAA@HH@Z).
+hw1.obj : error LNK2001: неразрешенный внешний символ "public: static struct cv::Ptr<struct cv::aruco::DetectorParameters> __cdecl cv::aruco::DetectorParameters::create(void)" (?create@DetectorParameters@aruco@cv@@SA?AU?$Ptr@UDetectorParameters@aruco@cv@@@3@XZ).
+hw1.obj : error LNK2001: неразрешенный внешний символ "void __cdecl cv::aruco::drawDetectedMarkers(class cv::_InputOutputArray const &,class cv::_InputArray const &,class cv::_InputArray const &,class cv::Scalar_<double>)" (?drawDetectedMarkers@aruco@cv@@YAXAEBV_InputOutputArray@2@AEBV_InputArray@2@1V?$Scalar_@N@2@@Z).
+hw1.obj : error LNK2001: неразрешенный внешний символ "void __cdecl cv::aruco::detectMarkers(class cv::_InputArray const &,struct cv::Ptr<class cv::aruco::Dictionary> const &,class cv::_OutputArray const &,class cv::_OutputArray const &,struct cv::Ptr<struct cv::aruco::DetectorParameters> const &,class cv::_OutputArray const &)" (?detectMarkers@aruco@cv@@YAXAEBV_InputArray@2@AEBU?$Ptr@VDictionary@aruco@cv@@@2@AEBV_OutputArray@2@2AEBU?$Ptr@UDetectorParameters@aruco@cv@@@2@2@Z).
+hw1.obj : error LNK2001: неразрешенный внешний символ "struct cv::Ptr<class cv::aruco::Dictionary> __cdecl cv::aruco::getPredefinedDictionary(enum cv::aruco::PREDEFINED_DICTIONARY_NAME)" (?getPredefinedDictionary@aruco@cv@@YA?AU?$Ptr@VDictionary@aruco@cv@@@2@W4PREDEFINED_DICTIONARY_NAME@12@@Z).
+hw1.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl cv::Mat::~Mat(void)" (??1Mat@cv@@QEAA@XZ).
+hw1.obj : error LNK2001: неразрешенный внешний символ "public: __cdecl cv::Mat::Mat(void)" (??0Mat@cv@@QEAA@XZ).
+hw1.obj : error LNK2001: неразрешенный внешний символ "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl cv::format(char const *,...)" (?format@cv@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PEBDZZ).
+hw1.obj : error LNK2001: неразрешенный внешний символ "int __cdecl cv::waitKey(int)" (?waitKey@cv@@YAHH@Z).
+C:\Users\aleks\Desktop\hw1\x64\Release\hw1.exe : fatal error LNK1120: неразрешенных внешних элементов: 14
