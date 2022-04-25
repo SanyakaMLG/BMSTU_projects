@@ -1,0 +1,5 @@
+﻿  hw2.cpp
+C:\Users\aleks\Desktop\hw2\hw2\hw2.cpp(39,24): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\aleks\Desktop\hw2\hw2\hw2.cpp(50,20): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\aleks\Desktop\hw2\hw2\hw2.cpp(51,21): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  hw2.vcxproj -> C:\Users\aleks\Desktop\hw2\x64\Debug\hw2.exe

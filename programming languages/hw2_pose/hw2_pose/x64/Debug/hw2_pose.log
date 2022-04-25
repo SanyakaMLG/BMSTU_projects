@@ -1,0 +1,5 @@
+﻿  hw2_pose.cpp
+C:\Users\aleks\Desktop\hw2_pose\hw2_pose\hw2_pose.cpp(83,24): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\aleks\Desktop\hw2_pose\hw2_pose\hw2_pose.cpp(94,20): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\aleks\Desktop\hw2_pose\hw2_pose\hw2_pose.cpp(95,21): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  hw2_pose.vcxproj -> C:\Users\aleks\Desktop\hw2_pose\x64\Debug\hw2_pose.exe
