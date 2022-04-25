@@ -15,7 +15,7 @@ public:
     void setElem(int row, int column, T x);
     void plusElem(int row, int column, T x);
     void show();
-    T operator()(int, int);
+    T& operator()(int, int);
     SparseMatrix operator+(SparseMatrix &other);
     SparseMatrix operator*(SparseMatrix &other);
     map<pair<int, int>, T> getMatrix();
@@ -71,14 +71,15 @@ void SparseMatrix<T, M, N>::show() {
 }
 
 template<typename T, int M, int N>
-T SparseMatrix<T, M, N>::operator()(int row, int column) {
+T &SparseMatrix<T, M, N>::operator()(int row, int column) {
     pair<int, int> idx;
     idx.first = row;
     idx.second = column;
     if(Matrix.find(idx) != Matrix.end()) {
         return Matrix[idx];
     } else {
-        return 0;
+        Matrix[idx] = 0;
+        return Matrix[idx];
     }
 }
 
