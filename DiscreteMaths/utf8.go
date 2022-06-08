@@ -2,28 +2,28 @@ package main
 
 import "fmt"
 
-func decode(utf8 []byte) []uint32 {
-	var utf32 []uint32
-	var sym uint32
+func decode(utf8 []byte) []rune {
+	var utf32 []rune
+	var sym rune
 	for i := 0; i < len(utf8); i++ {
 		if utf8[i]&0x00000080 == 0 {
-			utf32 = append(utf32, uint32(utf8[i]))
+			utf32 = append(utf32, rune(utf8[i]))
 		} else if utf8[i]&0x000000E0 == 0x000000C0 {
-			sym = ((uint32(utf8[i]) & 0x0000001F) << 6) | (uint32(utf8[i+1]) & 0x0000003F)
+			sym = ((rune(utf8[i]) & 0x0000001F) << 6) | (rune(utf8[i+1]) & 0x0000003F)
 			utf32 = append(utf32, sym)
 			i++
 		} else if utf8[i]&0x000000F0 == 0x000000E0 {
-			sym = ((uint32(utf8[i]) & 0x0000000F) << 6) | (uint32(utf8[i+1]) & 0x0000003F)
+			sym = ((rune(utf8[i]) & 0x0000000F) << 6) | (rune(utf8[i+1]) & 0x0000003F)
 			i++
-			sym = (sym << 6) | (uint32(utf8[i+1]) & 0x0000003F)
+			sym = (sym << 6) | (rune(utf8[i+1]) & 0x0000003F)
 			utf32 = append(utf32, sym)
 			i++
 		} else {
-			sym = ((uint32(utf8[i]) & 0x00000007) << 6) | ((uint32(utf8[i+1])) & 0x0000003F)
+			sym = ((rune(utf8[i]) & 0x00000007) << 6) | ((rune(utf8[i+1])) & 0x0000003F)
 			i++
-			sym = (sym << 6) | ((uint32(utf8[i+1])) & 0x0000003F)
+			sym = (sym << 6) | ((rune(utf8[i+1])) & 0x0000003F)
 			i++
-			sym = (sym << 6) | ((uint32(utf8[i+1])) & 0x0000003F)
+			sym = (sym << 6) | ((rune(utf8[i+1])) & 0x0000003F)
 			utf32 = append(utf32, sym)
 			i++
 		}
@@ -31,7 +31,7 @@ func decode(utf8 []byte) []uint32 {
 	return utf32
 }
 
-func encode(utf32 []uint32) []byte {
+func encode(utf32 []rune) []byte {
 	var utf8 []byte
 	for _, x := range utf32 {
 		if x < 0x0000007F {
@@ -57,7 +57,7 @@ func encode(utf32 []uint32) []byte {
 }
 
 func main() {
-	example := []uint32{'々', '䀀', '倀', 'ɰ'}
+	example := []rune("")
 	result1 := encode(example)
 	result2 := decode(result1)
 	fmt.Print(result1, result2)
