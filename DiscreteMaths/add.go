@@ -26,19 +26,23 @@ func add(a, b []int32, p int) []int32 {
 			over = 0
 		}
 	}
+	if over == 1 {
+		c = append(c, 1)
+	}
 	return c
 }
 
 func main() {
-	a := make([]int32, 5)
-	b := make([]int32, 7)
-	for i := 0; i < 5; i++ {
+	a := make([]int32, 1)
+	b := make([]int32, 1)
+	for i := 0; i < 1; i++ {
 		fmt.Scan(&a[i])
 	}
-	for i := 0; i < 7; i++ {
+	for i := 0; i < 1; i++ {
 		fmt.Scan(&b[i])
 	}
 	p := 10
 	add(a, b, p)
-	fmt.Print(add(a, b, p))
+	fmt.Println(add(a, b, p))
+	fmt.Println(len(add(a, b, p)))
 }

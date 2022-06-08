@@ -2,7 +2,11 @@ package main
 
 import "fmt"
 
-var arr [10]int
+var arr = []int{
+	-503, -521, -587, -610, -515, -510, -533, -549, -600, -557,
+	-533, -571, -597, -534, -516, -544, -601, -550, -605, -566,
+	-523, -534, -540, -581, -500, -561,
+}
 
 func less(i, j int) bool {
 	return arr[i] < arr[j]
@@ -12,28 +16,23 @@ func swap(i, j int) {
 	arr[i], arr[j] = arr[j], arr[i]
 }
 
-func quicksort(low, high int, less func(i, j int) bool, swap func(i, j int)) {
+func partition(low, high int, less func(i, j int) bool, swap func(i, j int)) int {
 	i := low
-	j := high
-	pivot := (i + j) / 2
-	for i <= j {
-		for less(pivot, j) {
-			j--
-		}
-		for less(i, pivot) {
-			i++
-		}
-		if i <= j {
+	for j := low; j < high; j++ {
+		if less(j, high) {
 			swap(i, j)
 			i++
-			j--
 		}
 	}
-	if low < j {
-		quicksort(low, j, less, swap)
-	}
-	if i < high {
-		quicksort(i, high, less, swap)
+	swap(i, high)
+	return i
+}
+
+func quicksort(low, high int, less func(i, j int) bool, swap func(i, j int)) {
+	if low < high {
+		q := partition(low, high, less, swap)
+		quicksort(low, q-1, less, swap)
+		quicksort(q+1, high, less, swap)
 	}
 }
 
@@ -42,11 +41,8 @@ func qsort(n int, less func(i, j int) bool, swap func(i, j int)) {
 }
 
 func main() {
-	for i := 0; i < 10; i++ {
-		fmt.Scan(&arr[i])
-	}
-	qsort(10, less, swap)
-	for i := 0; i < 10; i++ {
+	qsort(26, less, swap)
+	for i := 0; i < 26; i++ {
 		fmt.Print(arr[i], " ")
 	}
 }
