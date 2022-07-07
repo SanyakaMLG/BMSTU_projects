@@ -2,63 +2,56 @@ package main
 
 import "fmt"
 
-func decode(utf8 []byte) []rune {
-	var utf32 []rune
-	var sym rune
-	for i := 0; i < len(utf8); i++ {
-		if utf8[i]&0x00000080 == 0 {
-			utf32 = append(utf32, rune(utf8[i]))
-		} else if utf8[i]&0x000000E0 == 0x000000C0 {
-			sym = ((rune(utf8[i]) & 0x0000001F) << 6) | (rune(utf8[i+1]) & 0x0000003F)
-			utf32 = append(utf32, sym)
-			i++
-		} else if utf8[i]&0x000000F0 == 0x000000E0 {
-			sym = ((rune(utf8[i]) & 0x0000000F) << 6) | (rune(utf8[i+1]) & 0x0000003F)
-			i++
-			sym = (sym << 6) | (rune(utf8[i+1]) & 0x0000003F)
-			utf32 = append(utf32, sym)
-			i++
-		} else {
-			sym = ((rune(utf8[i]) & 0x00000007) << 6) | ((rune(utf8[i+1])) & 0x0000003F)
-			i++
-			sym = (sym << 6) | ((rune(utf8[i+1])) & 0x0000003F)
-			i++
-			sym = (sym << 6) | ((rune(utf8[i+1])) & 0x0000003F)
-			utf32 = append(utf32, sym)
-			i++
-		}
-	}
-	return utf32
-}
-
 func encode(utf32 []rune) []byte {
-	var utf8 []byte
-	for _, x := range utf32 {
-		if x < 0x0000007F {
-			utf8 = append(utf8, byte(x))
-		} else if x < 0x000007FF {
-			b1 := byte(((x & 0x000007C0) >> 6) | 0x000000C0)
-			b2 := byte((x & 0x0000003F) | 0x00000080)
-			utf8 = append(utf8, b1, b2)
-		} else if x < 0x0000FFFF {
-			b1 := byte(((x & 0x0000F000) >> 12) | 0x000000E0)
-			b2 := byte(((x & 0x00000FC0) >> 6) | 0x00000080)
-			b3 := byte((x & 0x0000003F) | 0x00000080)
-			utf8 = append(utf8, b1, b2, b3)
+	utf8 := make([]byte, 0)
+	for _, elem := range utf32 {
+		if elem>>7 == 0 {
+			utf8 = append(utf8, byte(elem))
+		} else if elem>>11 == 0 {
+			byte1 := 3<<6 + byte(elem>>6)
+			byte2 := 1<<7 + byte(elem&63)
+			utf8 = append(utf8, byte1, byte2)
+		} else if elem>>16 == 0 {
+			byte1 := 7<<5 + byte(elem>>12)
+			byte2 := 1<<7 + byte(elem>>6&63)
+			byte3 := 1<<7 + byte(elem&63)
+			utf8 = append(utf8, byte1, byte2, byte3)
 		} else {
-			b1 := byte(((x & 0x00180000) >> 18) | 0x03C00000)
-			b2 := byte(((x & 0x0003F000) >> 12) | 0x00080000)
-			b3 := byte(((x & 0x00000FC0) >> 6) | 0x00002000)
-			b4 := byte((x & 0x0000003F) | 0x00000080)
-			utf8 = append(utf8, b1, b2, b3, b4)
+			byte1 := 15<<4 + byte(elem>>18)
+			byte2 := 1<<7 + byte(elem>>12&63)
+			byte3 := 1<<7 + byte(elem>>6&63)
+			byte4 := 1<<7 + byte(elem&63)
+			utf8 = append(utf8, byte1, byte2, byte3, byte4)
 		}
 	}
 	return utf8
 }
 
+func decode(utf8 []byte) []rune {
+	utf32 := make([]rune, 0)
+	for idx := 0; idx < len(utf8); idx++ {
+		if utf8[idx]>>7 == 0 {
+			utf32 = append(utf32, rune(utf8[idx]))
+		} else if utf8[idx]>>5 == 6 {
+			byte1 := rune((utf8[idx+1]<<1)>>1) + rune(utf8[idx]<<2)<<4
+			utf32 = append(utf32, byte1)
+			idx += 1
+		} else if utf8[idx]>>4 == 14 {
+			byte1 := rune((utf8[idx+2]<<1)>>1) + rune(utf8[idx+1]<<2)<<4 + rune(utf8[idx]<<4)<<8
+			utf32 = append(utf32, byte1)
+			idx += 2
+		} else {
+			byte1 := rune((utf8[idx+3]<<1)>>1) + rune(utf8[idx+2]<<2)<<4 + rune(utf8[idx+1]<<2)<<10 + rune(utf8[idx]<<5)<<13
+			utf32 = append(utf32, byte1)
+			idx += 3
+		}
+	}
+	return utf32
+}
+
 func main() {
-	example := []rune("")
-	result1 := encode(example)
-	result2 := decode(result1)
-	fmt.Print(result1, result2)
+	example := ([]rune)("😀")
+	fmt.Println(example)
+	fmt.Println(decode(encode(example)))
+	fmt.Println(encode(example))
 }

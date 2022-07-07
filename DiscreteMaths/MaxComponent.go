@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strconv"
 )
 
@@ -61,6 +63,7 @@ func VisitVertex1(listIncidence *[]graphVertex, component *Comp, vertex *graphVe
 }
 
 func main() {
+	bufstdin := bufio.NewReader(os.Stdin)
 	color := "[color = red]"
 	edges := make([][2]int, 0)
 	var c Comp
@@ -70,8 +73,7 @@ func main() {
 	c.minVertex = -1
 	var ve [2]int
 	var n, m, v1, v2 int
-	fmt.Scan(&n)
-	fmt.Scan(&m)
+	fmt.Fscan(bufstdin, &n, &m)
 	listIncidence := make([]graphVertex, 0)
 	for i := 0; i < n; i++ {
 		var s graphVertex
@@ -82,7 +84,7 @@ func main() {
 		listIncidence = append(listIncidence, s)
 	}
 	for i := 0; i < m; i++ {
-		fmt.Scan(&v1, &v2)
+		fmt.Fscan(bufstdin, &v1, &v2)
 		ve[0] = v1
 		ve[1] = v2
 		edges = append(edges, ve)

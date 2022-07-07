@@ -19,6 +19,9 @@ var i int
 
 func Calculate(s string) int {
 	i++
+	if s[0] != '(' {
+		return int(s[0] - '0')
+	}
 	if i >= len(s) {
 		return 0
 	}
@@ -40,6 +43,5 @@ func Calculate(s string) int {
 func main() {
 	var s string
 	s = Scan1()
-	fmt.Println(s)
 	fmt.Printf("%d\n", Calculate(s))
 }

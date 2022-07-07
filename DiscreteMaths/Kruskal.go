@@ -28,15 +28,13 @@ func find(v *Attraction) *Attraction {
 func union(v, u *Attraction) {
 	ancestor1 := find(v)
 	ancestor2 := find(u)
-	if ancestor1.dependence > ancestor2.dependence {
-		ancestor2.ancestor = ancestor1
+	if ancestor1.dependence < ancestor2.dependence {
+		ancestor1.ancestor = ancestor2
 	} else {
 		if ancestor1.dependence == ancestor2.dependence {
 			ancestor1.dependence++
-			ancestor2.ancestor = ancestor1
-		} else {
-			ancestor1.ancestor = ancestor2
 		}
+		ancestor2.ancestor = ancestor1
 	}
 
 }
@@ -91,8 +89,5 @@ func main() {
 		}
 	}
 	shortPath = MST_Kruskal(roads, lenRoad)
-	sort.Slice(roads, func(i, j int) bool {
-		return roads[i].length < roads[j].length
-	})
 	fmt.Printf("%.2f\n", shortPath)
 }

@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
 
 var k = 0
 
@@ -16,7 +21,9 @@ func DFS(D [][]int, renumeration []int, q int) {
 
 func main() {
 	var n, m, q int
-	fmt.Scan(&n, &m, &q)
+	bufstdin := bufio.NewReader(os.Stdin)
+	bufstdout := bufio.NewWriter(os.Stdout)
+	fmt.Fscan(bufstdin, &n, &m, &q)
 	var D = make([][]int, n)
 	var F = make([][]string, n)
 	var renumeration = make([]int, n)
@@ -25,13 +32,13 @@ func main() {
 		renumeration[i] = -1
 		D[i] = make([]int, m)
 		for j := 0; j < m; j++ {
-			fmt.Scan(&D[i][j])
+			fmt.Fscan(bufstdin, &D[i][j])
 		}
 	}
 	for i := 0; i < n; i++ {
 		F[i] = make([]string, m)
 		for j := 0; j < m; j++ {
-			fmt.Scan(&F[i][j])
+			fmt.Fscan(bufstdin, &F[i][j])
 		}
 	}
 	DFS(D, renumeration, q)
@@ -42,19 +49,20 @@ func main() {
 			n--
 		}
 	}
-	fmt.Printf("%d\n%d\n%d\n", n, m, 0)
+	bufstdout.WriteString(strconv.Itoa(n) + "\n" + strconv.Itoa(m) + "\n" + strconv.Itoa(0) + "\n")
 	for i := 0; i < n; i++ {
 		k := reRenumeration[i]
 		for j := 0; j < m; j++ {
-			fmt.Printf("%d ", renumeration[D[k][j]])
+			bufstdout.WriteString(strconv.Itoa(renumeration[D[k][j]]) + " ")
 		}
-		fmt.Println()
+		bufstdout.WriteString("\n")
 	}
 	for i := 0; i < n; i++ {
 		k := reRenumeration[i]
 		for j := 0; j < m; j++ {
-			fmt.Printf("%s ", F[k][j])
+			bufstdout.WriteString(F[k][j] + " ")
 		}
-		fmt.Println()
+		bufstdout.WriteString("\n")
 	}
+	bufstdout.Flush()
 }
