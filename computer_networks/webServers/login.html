@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+<script>
+    function setCookie(name, value, options = {}) {
+        options = {
+            path: '/',
+            ...options
+        };
+        if (options.expires instanceof Date) {
+            options.expires = options.expires.toUTCString();
+        }
+        let updatedCookie = encodeURIComponent(name) + "=" + value;
+        for (let optionKey in options) {
+            updatedCookie += "; " + optionKey;
+            let optionValue = options[optionKey];
+            if (optionValue !== true) {
+                updatedCookie += "=" + optionValue;
+            }
+        }
+        document.cookie = updatedCookie;
+    }
+    window.addEventListener("load", function(evt) {
+        var output = document.getElementById("output");
+        var print = function(message) {
+            var d = document.createElement("div");
+            d.textContent = message;
+            output.appendChild(d);
+            output.scroll(0, output.scrollHeight);
+        };
+        var ws;
+        ws = new WebSocket("ws://localhost:8080/login");
+        ws.onmessage = function(evt) {
+        var map = new Map(Object.entries(JSON.parse(evt.data)))
+            if (map.get('token')) {
+                setCookie('token', map.get('token'))
+                print("You was successfully authorised" )
+            }else{
+                print("Wrong login or Password!")
+            }
+    }
+
+        var form = document.forms['publish']
+        form.onsubmit = function () {
+            var login = this.login.value;
+            var password = this.password.value;
+            let user ={
+                msgType: 'register',
+                login: login,
+                password: password
+            };
+            let json = JSON.stringify(user)
+            ws.send(json)
+            return false;
+        };
+    });
+</script>
+<body style="background-color: #ededed;">
+        <form  name="publish">
+                <input type="text"  placeholder="login" class="form-control" name="login"/>
+                <input type="password" placeholder="password" class="form-control" name="password" />
+            <input type="submit" id="send"/>
+        </form>
+        <div id = "output">
+            <h3>Response</h3>
+            <div>{{.}}</div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+(define (and-fold . xs)
+    (let loop((xs (cons #t xs)))
+      (if (null? (cdr xs))
+          (car xs)
+          (loop (cons (and (car xs) (cadr xs)) (cddr xs))))))
+
+(define (f lst)
+  (cond  ((not (pair? lst)) lst)
+         ((and (list? lst) (null? lst)) lst)
+         ((list? lst) (cons (f (car lst)) (f (cdr lst))))
+         ((pair? (cdr lst)) (cons (f (car lst)) (f (cdr lst))))
+         (else (list (f (car lst)) (cdr lst)))))

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+<script>
+  window.addEventListener("load", function(evt) {
+    var output = document.getElementById("output");
+    var input = document.getElementById("input");
+    var ws;
+    ws = new WebSocket("ws://localhost:8080/echo");
+    var print = function(message) {
+      var d = document.createElement("div");
+      d.textContent = message;
+      output.appendChild(d);
+      output.scroll(0, output.scrollHeight);
+    };
+    document.getElementById("send").onclick = function(evt) {
+      ws.onopen = function(evt) {
+        print("OPEN");
+      }
+      ws.onclose = function(evt) {
+        print("CLOSE");
+        ws = null;
+      }
+      ws.onmessage = function(evt) {
+        print("RESPONSE: " + evt.data);
+      }
+      ws.onerror = function(evt) {
+        print("ERROR: " + evt.data);
+      }
+      let formElement = document.getElementById('form');
+
+      ws.send(input.value);
+     print(input.value)
+      return false;
+    };
+  });
+</script>
+
+<body style="background-color: #ededed;">
+<div class="container-fluid" style="margin-top: 30px;">
+
+  <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+    <form id="form">
+        <input type="text"  placeholder="arg1" class="form-control" id="input" name="arg1"/>
+          <button  id="send">Send</button>
+    </form>
+    <div >
+      <h3>Response</h3>
+      <div id="output" style="max-height: 70vh;overflow-y: scroll;"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

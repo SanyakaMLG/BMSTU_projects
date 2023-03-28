@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+<script>
+  function setCookie(name, value, options = {}) {
+    options = {
+      path: '/',
+      ...options
+    };
+    if (options.expires instanceof Date) {
+      options.expires = options.expires.toUTCString();
+    }
+    let updatedCookie = encodeURIComponent(name) + "=" + value;
+    for (let optionKey in options) {
+      updatedCookie += "; " + optionKey;
+      let optionValue = options[optionKey];
+      if (optionValue !== true) {
+        updatedCookie += "=" + optionValue;
+      }
+    }
+    document.cookie = updatedCookie;
+  }
+  function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+  function deleteCookie(name) {
+    setCookie(name, "", {
+      'max-age': -1
+    })
+  }
+  window.addEventListener("load", function(evt) {
+    var output = document.getElementById("output");
+    var input = document.getElementById("input");
+    var ws;
+    ws = new WebSocket("ws://localhost:8080/console");
+    var print = function(message) {
+      var d = document.createElement("div");
+      d.textContent = message;
+      output.appendChild(d);
+      output.scroll(0, output.scrollHeight);
+    };
+    document.getElementById("send").onclick = function(evt) {
+      ws.onopen = function(evt) {
+        print("OPEN");
+      }
+      ws.onclose = function(evt) {
+        print("CLOSE");
+        ws = null;
+      }
+      ws.onmessage = function(evt) {
+        print("RESPONSE: " + evt.data);
+      }
+      ws.onerror = function(evt) {
+        print("ERROR: " + evt.data);
+      }
+      let token = getCookie('token')
+      let command = {
+        msgType: 'token',
+        token: token,
+        command: input.value
+      };
+      let json = JSON.stringify(command)
+      ws.send(json);
+      return false;
+    };
+    document.getElementById("logout").onclick = function (){
+      print("You have been logout")
+        deleteCookie('token');
+        return false;
+    };
+  });
+</script>
+<body style="background-color: #ededed;">
+<div class="container-fluid" style="margin-top: 30px;">
+
+  <div class="row col-lg-4 col-lg-offset-4" style="margin-top: 40px; background-color: #fff; padding: 20px; border: solid 1px #ddd;">
+    <form id="form">
+      <input type="text"  placeholder="command" class="form-control" id="input" name="arg1"/>
+      <button type="submit" id="send">Send</button>
+    </form>
+    <button id="logout">Logout</button>
+    <div >
+      <h3>Response</h3>
+      <div id="output" style="max-height: 70vh;overflow-y: scroll;"></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

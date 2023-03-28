@@ -1,0 +1,1 @@
+[{"login":"123","password":"$2a$14$6u847oX9uc1tMhusJjMIj.qXW9lWIE3smapuJjbBOtse3HnxvnHsK"}]
